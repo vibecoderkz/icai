@@ -35,8 +35,17 @@
 - [x] Порядок спикеров: Толкын → Даурен → Иван (согласно программе)
 - [x] Изображения спикеров: полная высота и ширина секции
 - [x] Деплой на Vercel
+- [x] Создание .env файла с переменными окружения
+- [x] Изображения спикеров: красивые рамки с borders и эффектами
+- [x] Настройка переменных окружения для production
+- [x] Добавление SEO метаданных: Open Graph, Twitter Cards, Schema.org
+- [x] Создание robots.txt и sitemap.xml
+- [x] Подготовка к push в GitHub (удаление node_modules из git)
 
 ## Новые задачи
+
+- [ ] Push в GitHub репозиторий
+- [ ] Деплой на Vercel с production URL
 
 ## Заметки
 
@@ -44,4 +53,6 @@
 - Каждая секция = 100vh
 - Темная тема с градиентами (фиолетово-синий)
 - Форма отправляет данные в Telegram
-- Ссылка на оплату Kaspi: https://pay.kaspi.kz/pay/p4zi1cg2 
+- Ссылка на оплату Kaspi: https://pay.kaspi.kz/pay/p4zi1cg2
+- SEO оптимизация: полные метаданные, структурированные данные, sitemap
+- Repository: https://github.com/vibecoderkz/icai.git 
