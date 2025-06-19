@@ -41,11 +41,10 @@
 - [x] Добавление SEO метаданных: Open Graph, Twitter Cards, Schema.org
 - [x] Создание robots.txt и sitemap.xml
 - [x] Подготовка к push в GitHub (удаление node_modules из git)
+- [x] Push в GitHub репозиторий
+- [x] Деплой на Vercel с production URL
 
 ## Новые задачи
-
-- [ ] Push в GitHub репозиторий
-- [ ] Деплой на Vercel с production URL
 
 ## Заметки
 
@@ -55,4 +54,5 @@
 - Форма отправляет данные в Telegram
 - Ссылка на оплату Kaspi: https://pay.kaspi.kz/pay/p4zi1cg2
 - SEO оптимизация: полные метаданные, структурированные данные, sitemap
-- Repository: https://github.com/vibecoderkz/icai.git 
+- Repository: https://github.com/vibecoderkz/icai.git
+- Production URL: https://icai-3z2upfiq5-dias-zhumagaliyevs-projects-9c8e2b9c.vercel.app 
