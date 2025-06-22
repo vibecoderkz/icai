@@ -52,6 +52,17 @@ export default function Home() {
         imagePath="/speakers/ivan.png"
       />
 
+      <SpeakerSection
+        id="speaker-alibek"
+        name="Алибек Абдеков"
+        title="CEO AVM.AI"
+        topic="Как заменить рутину в бизнесе искусственным интеллектом"
+        description="Практические решения для автоматизации бизнес-процессов с помощью ИИ. Реальные кейсы внедрения AI-инструментов, экономия времени и ресурсов, а также стратегии перехода от рутинных задач к стратегическому мышлению."
+        imageGradient="from-orange-600 via-red-600 to-orange-800"
+        accentColor="purple"
+        imagePath="/speakers/alibek.png"
+      />
+
       {/* Воркшоп */}
       <WorkshopSection />
 

@@ -43,6 +43,8 @@
 - [x] Подготовка к push в GitHub (удаление node_modules из git)
 - [x] Push в GitHub репозиторий
 - [x] Деплой на Vercel с production URL
+- [x] Добавить спикера Алибека Абдекова (CEO AVM.AI)
+- [x] Обновить программу форума с новым расписанием (10 минут на спикера)
 
 ## Новые задачи
 
@@ -55,4 +57,6 @@
 - Ссылка на оплату Kaspi: https://pay.kaspi.kz/pay/p4zi1cg2
 - SEO оптимизация: полные метаданные, структурированные данные, sitemap
 - Repository: https://github.com/vibecoderkz/icai.git
-- Production URL: https://icai-3z2upfiq5-dias-zhumagaliyevs-projects-9c8e2b9c.vercel.app 
+- Production URL: https://icai-3z2upfiq5-dias-zhumagaliyevs-projects-9c8e2b9c.vercel.app
+- Порядок спикеров: Толкын → Даурен → Иван → Алибек
+- Время выступления каждого спикера: 10 минут 

@@ -176,7 +176,7 @@ export default function SpeakerSection({
               </div>
               <div>
                 <p className="text-white font-medium">Экспертное выступление</p>
-                <p className="text-gray-400 text-sm">15 минут</p>
+                <p className="text-gray-400 text-sm">10 минут</p>
               </div>
             </motion.div>
           </motion.div>
