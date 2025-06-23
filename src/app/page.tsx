@@ -42,6 +42,17 @@ export default function Home() {
       />
 
       <SpeakerSection
+        id="speaker-marat"
+        name="Марат"
+        title="IT-обозреватель и эксперт"
+        topic="Как за неделю создать, при помощи ИИ, телеграм бота на Python"
+        description="Основатель комьюнити TechPeople покажет пошаговый процесс создания Telegram-бота с использованием ИИ. Бот автоматически ищет новости про IT и стартапы в Казахстане и публикует их в телеграм канале. Практический воркшоп для разработчиков."
+        imageGradient="from-green-600 via-emerald-600 to-green-800"
+        accentColor="cyan"
+        imagePath="/speakers/marat.png"
+      />
+
+      <SpeakerSection
         id="speaker-ivan"
         name="Иван"
         title="AI-евангелист"
