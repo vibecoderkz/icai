@@ -278,9 +278,6 @@ export default function RegistrationSection() {
               placeholder="Введите промокод, если имеется"
               className="w-full px-4 py-3 rounded-xl bg-dark-bg/50 border border-gray-600/50 text-white placeholder-gray-400 focus:border-neon-blue focus:outline-none transition-colors"
             />
-            <p className="text-gray-400 text-sm mt-1">
-              Если у вас есть промокод &quot;Tech People&quot;, вы будете перенаправлены на WhatsApp
-            </p>
           </div>
 
           {/* Согласие */}
