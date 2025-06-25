@@ -11,6 +11,7 @@ interface FormData {
   phone: string
   profession: string
   source: string
+  promoCode?: string
   consent: boolean
 }
 
@@ -48,13 +49,34 @@ export default function RegistrationSection() {
     setIsSubmitting(true)
     
     try {
+      // Проверка промокода "Tech People"
+      if (data.promoCode && data.promoCode.toLowerCase() === 'tech people') {
+        // Перенаправление на WhatsApp
+        window.open('https://wa.me/+77752837306', '_blank')
+        
+        // Отправка в Telegram с информацией о промокоде
+        await sendToTelegram({
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.phone,
+          profession: data.profession,
+          source: data.source,
+          promoCode: data.promoCode
+        })
+        
+        reset()
+        setIsSubmitting(false)
+        return
+      }
+
       // Отправка в Telegram
       const success = await sendToTelegram({
         fullName: data.fullName,
         email: data.email,
         phone: data.phone,
         profession: data.profession,
-        source: data.source
+        source: data.source,
+        promoCode: data.promoCode
       })
 
       if (success) {
@@ -243,6 +265,22 @@ export default function RegistrationSection() {
             {errors.source && (
               <p className="text-red-400 text-sm mt-1">{errors.source.message}</p>
             )}
+          </div>
+
+          {/* Промокод */}
+          <div>
+            <label className="block text-white font-medium mb-2">
+              Промокод <span className="text-gray-400">(необязательно)</span>
+            </label>
+            <input
+              {...register('promoCode')}
+              type="text"
+              placeholder="Введите промокод, если имеется"
+              className="w-full px-4 py-3 rounded-xl bg-dark-bg/50 border border-gray-600/50 text-white placeholder-gray-400 focus:border-neon-blue focus:outline-none transition-colors"
+            />
+            <p className="text-gray-400 text-sm mt-1">
+              Если у вас есть промокод &quot;Tech People&quot;, вы будете перенаправлены на WhatsApp
+            </p>
           </div>
 
           {/* Согласие */}

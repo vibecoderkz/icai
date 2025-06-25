@@ -4,6 +4,7 @@ interface RegistrationData {
   phone: string
   profession: string
   source: string
+  promoCode?: string
 }
 
 export const sendToTelegram = async (data: RegistrationData): Promise<boolean> => {
@@ -14,7 +15,7 @@ export const sendToTelegram = async (data: RegistrationData): Promise<boolean> =
 📧 Email: ${data.email}
 📱 Телефон: ${data.phone}
 💼 Роль: ${data.profession}
-🔎 Источник: ${data.source}
+🔎 Источник: ${data.source}${data.promoCode ? `\n🎫 Промокод: ${data.promoCode}` : ''}
 ⏰ Время: ${new Date().toLocaleString('ru-RU')}
     `.trim()
 
@@ -52,7 +53,7 @@ export const createTelegramMessage = (data: RegistrationData): string => {
 📧 Email: ${data.email}
 📱 Телефон: ${data.phone}
 💼 Роль: ${data.profession}
-🔎 Источник: ${data.source}
+🔎 Источник: ${data.source}${data.promoCode ? `\n🎫 Промокод: ${data.promoCode}` : ''}
 ⏰ Время: ${new Date().toLocaleString('ru-RU', {
     year: 'numeric',
     month: 'long',
