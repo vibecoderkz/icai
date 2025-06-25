@@ -49,8 +49,8 @@ export default function RegistrationSection() {
     setIsSubmitting(true)
     
     try {
-      // Проверка промокода "Tech People"
-      if (data.promoCode && data.promoCode.toLowerCase() === 'tech people') {
+      // Проверка промокода "Tech People" (гибкая проверка без учета пробелов и регистра)
+      if (data.promoCode && data.promoCode.toLowerCase().replace(/\s+/g, '') === 'techpeople') {
         // Перенаправление на WhatsApp
         window.open('https://wa.me/+77752837306', '_blank')
         
