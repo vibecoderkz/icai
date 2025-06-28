@@ -7,6 +7,15 @@ interface RegistrationData {
   promoCode?: string
 }
 
+interface CourseApplicationData {
+  fullName: string
+  email: string
+  phone: string
+  profession: string
+  experience: string
+  motivation: string
+}
+
 export const sendToTelegram = async (data: RegistrationData): Promise<boolean> => {
   try {
     const message = `
@@ -42,6 +51,46 @@ export const sendToTelegram = async (data: RegistrationData): Promise<boolean> =
     
   } catch (error) {
     console.error('❌ Ошибка отправки в Telegram:', error)
+    return false
+  }
+}
+
+export const sendCourseApplication = async (data: CourseApplicationData): Promise<boolean> => {
+  try {
+    const message = `
+🎓 Новая заявка на курс "Практика ИИ-инструментов и Вайб-Кодинг":
+👤 ФИО: ${data.fullName}
+📧 Email: ${data.email}
+📱 Телефон: ${data.phone}
+💼 Профессия: ${data.profession}
+🎯 Опыт с ИИ: ${data.experience}
+💭 Мотивация: ${data.motivation}
+⏰ Время: ${new Date().toLocaleString('ru-RU')}
+    `.trim()
+
+    console.log('📤 Отправка заявки на курс в Telegram...')
+    
+    // Отправляем через наш API endpoint
+    const response = await fetch('/api/telegram', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      console.error('❌ Ошибка API:', errorData)
+      return false
+    }
+
+    const result = await response.json()
+    console.log('✅ Заявка на курс успешно отправлена в Telegram')
+    return true
+    
+  } catch (error) {
+    console.error('❌ Ошибка отправки заявки на курс в Telegram:', error)
     return false
   }
 }

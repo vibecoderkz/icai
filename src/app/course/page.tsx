@@ -3,13 +3,69 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Navigation from '@/components/Navigation'
+import { sendCourseApplication } from '@/utils/telegram'
+
+interface FormData {
+  fullName: string
+  email: string
+  phone: string
+  profession: string
+  experience: string
+  motivation: string
+}
 
 export default function CoursePage() {
   const [isVisible, setIsVisible] = useState(false)
+  const [formData, setFormData] = useState<FormData>({
+    fullName: '',
+    email: '',
+    phone: '',
+    profession: '',
+    experience: '',
+    motivation: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const success = await sendCourseApplication(formData)
+      
+      if (success) {
+        setIsSubmitted(true)
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          profession: '',
+          experience: '',
+          motivation: ''
+        })
+      } else {
+        alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.')
+      }
+    } catch (error) {
+      console.error('Ошибка отправки формы:', error)
+      alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   const modules = [
     {
@@ -101,9 +157,23 @@ export default function CoursePage() {
               </div>
             </div>
 
-            <div className="text-3xl md:text-4xl font-light text-neon-blue mb-4">
+            <div className="text-3xl md:text-4xl font-light text-neon-blue mb-8">
               Создай продукт и получи плату уже на курсе!
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 1.2 }}
+            >
+              <a
+                href="#application"
+                className="inline-flex items-center gap-4 px-12 py-6 text-xl font-medium text-white bg-gradient-to-r from-green-500 to-blue-500 rounded-full hover:from-green-400 hover:to-blue-400 transition-all duration-300 transform hover:scale-105"
+              >
+                <span className="text-2xl">🚀</span>
+                Подать заявку на курс
+              </a>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -190,6 +260,31 @@ export default function CoursePage() {
               </motion.div>
             ))}
           </div>
+
+          {/* CTA в секции модулей */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mt-16"
+          >
+            <div className="p-8 rounded-2xl bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-neon-purple/30 backdrop-blur-sm">
+              <h3 className="text-2xl md:text-3xl font-medium text-white mb-4">
+                Готовы изучать ИИ-инструменты?
+              </h3>
+              <p className="text-lg text-gray-300 mb-8">
+                Присоединяйтесь к курсу и станьте экспертом в области искусственного интеллекта
+              </p>
+              <a
+                href="#application"
+                className="inline-flex items-center gap-4 px-10 py-4 text-lg font-medium text-white bg-gradient-to-r from-neon-purple to-neon-blue rounded-full hover:from-purple-400 hover:to-blue-400 transition-all duration-300 transform hover:scale-105"
+              >
+                <span className="text-xl">📝</span>
+                Оставить заявку
+              </a>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -249,33 +344,202 @@ export default function CoursePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-dark-bg via-purple-900/20 to-dark-secondary" />
+      {/* Application Form Section */}
+      <section id="application" className="relative min-h-screen flex items-center justify-center px-6 py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-dark-bg via-green-900/10 to-dark-secondary" />
         
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <div className="relative z-10 max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
+            className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-6xl font-thin mb-8 text-white">
-              Готовы начать?
+              Подать заявку на курс
             </h2>
             
-            <p className="text-xl text-gray-400 mb-12 leading-relaxed">
-              Присоединяйтесь к курсу и создайте свой первый AI-продукт уже через 10 недель
+            <p className="text-xl text-gray-400 leading-relaxed">
+              Заполните форму, и мы свяжемся с вами для обсуждения деталей
             </p>
+          </motion.div>
 
+          {isSubmitted ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-center p-12 rounded-2xl bg-gradient-to-r from-green-900/40 to-blue-900/40 border border-green-400/30 backdrop-blur-sm"
+            >
+              <div className="text-6xl mb-6">✅</div>
+              <h3 className="text-3xl font-medium text-white mb-4">
+                Заявка отправлена!
+              </h3>
+              <p className="text-xl text-gray-300 mb-8">
+                Спасибо за интерес к курсу. Мы свяжемся с вами в ближайшее время.
+              </p>
+              <button
+                onClick={() => setIsSubmitted(false)}
+                className="px-8 py-3 text-lg text-white bg-gradient-to-r from-neon-purple to-neon-blue rounded-full hover:from-purple-400 hover:to-blue-400 transition-all duration-300"
+              >
+                Подать еще одну заявку
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-dark-secondary/40 border border-gray-700/30 backdrop-blur-sm">
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-2">
+                      Полное имя *
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg bg-dark-bg/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-neon-purple transition-colors"
+                      placeholder="Введите ваше полное имя"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg bg-dark-bg/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-neon-purple transition-colors"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
+                      Телефон *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg bg-dark-bg/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-neon-purple transition-colors"
+                      placeholder="+7 (___) ___-__-__"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="profession" className="block text-sm font-medium text-gray-300 mb-2">
+                      Профессия *
+                    </label>
+                    <input
+                      type="text"
+                      id="profession"
+                      name="profession"
+                      value={formData.profession}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg bg-dark-bg/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-neon-purple transition-colors"
+                      placeholder="Ваша текущая профессия"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="experience" className="block text-sm font-medium text-gray-300 mb-2">
+                    Опыт работы с ИИ *
+                  </label>
+                  <select
+                    id="experience"
+                    name="experience"
+                    value={formData.experience}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-dark-bg/50 border border-gray-600 text-white focus:outline-none focus:border-neon-purple transition-colors"
+                  >
+                    <option value="">Выберите ваш уровень</option>
+                    <option value="Никогда не использовал ИИ">Никогда не использовал ИИ</option>
+                    <option value="Базовый (ChatGPT, простые промпты)">Базовый (ChatGPT, простые промпты)</option>
+                    <option value="Средний (различные ИИ-инструменты)">Средний (различные ИИ-инструменты)</option>
+                    <option value="Продвинутый (создание ИИ-продуктов)">Продвинутый (создание ИИ-продуктов)</option>
+                  </select>
+                </div>
+
+                <div className="mb-8">
+                  <label htmlFor="motivation" className="block text-sm font-medium text-gray-300 mb-2">
+                    Почему вы хотите изучать ИИ? *
+                  </label>
+                  <textarea
+                    id="motivation"
+                    name="motivation"
+                    value={formData.motivation}
+                    onChange={handleInputChange}
+                    required
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-lg bg-dark-bg/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-neon-purple transition-colors resize-none"
+                    placeholder="Расскажите о ваших целях и мотивации..."
+                  />
+                </div>
+
+                <div className="text-center">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="inline-flex items-center gap-4 px-12 py-4 text-xl font-medium text-white bg-gradient-to-r from-green-500 to-blue-500 rounded-full hover:from-green-400 hover:to-blue-400 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Отправка...
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-2xl">🚀</span>
+                        Отправить заявку
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          )}
+
+          {/* Дополнительная информация */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="text-center mt-12"
+          >
+            <p className="text-lg text-gray-400 mb-6">
+              Есть вопросы? Напишите нам в Instagram
+            </p>
             <a
               href="https://www.instagram.com/arnakairat?igsh=cHFtZndnbDNjYnht"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-4 px-12 py-6 text-xl font-medium text-white bg-gradient-to-r from-neon-purple to-neon-blue rounded-full hover:from-purple-400 hover:to-blue-400 transition-all duration-300 transform hover:scale-105"
+              className="inline-flex items-center gap-3 px-8 py-3 text-lg text-gray-300 border border-gray-600 rounded-full hover:border-pink-400 hover:text-pink-400 transition-all duration-300"
             >
-              <span className="text-2xl">📸</span>
-              Узнать больше в Instagram
+              <span className="text-xl">📸</span>
+              @arnakairat
             </a>
           </motion.div>
         </div>
