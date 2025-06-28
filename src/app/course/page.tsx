@@ -84,13 +84,13 @@ export default function CoursePage() {
       icon: "🎬"
     },
     {
-      title: "Vibe-Coding (9-12)",
-      description: "архитектура, код, API",
+      title: "Vibe-Coding (9-16)",
+      description: "архитектура, код, API (8 уроков)",
       icon: "💻"
     },
     {
-      title: "Монетизация (13-20)",
-      description: "UX, клиенты, развитие",
+      title: "Финальный проект (17-20)",
+      description: "MVP, клиенты, монетизация",
       icon: "💰"
     }
   ]
@@ -137,11 +137,11 @@ export default function CoursePage() {
               Освойте ключевые ИИ‑подходы и разработайте собственный AI‑продукт, получив первых платных клиентов уже во время обучения
             </p>
 
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               <div className="p-6 rounded-xl bg-dark-secondary/40 border border-neon-purple/30 backdrop-blur-sm">
                 <div className="text-4xl mb-4">⏱️</div>
                 <div className="text-xl font-medium text-white">10 недель</div>
-                <div className="text-gray-400">20 уроков</div>
+                <div className="text-gray-400">8 уроков Vibe-Coding</div>
               </div>
               
               <div className="p-6 rounded-xl bg-dark-secondary/40 border border-neon-blue/30 backdrop-blur-sm">
@@ -151,20 +151,31 @@ export default function CoursePage() {
               </div>
               
               <div className="p-6 rounded-xl bg-dark-secondary/40 border border-green-400/30 backdrop-blur-sm">
-                <div className="text-4xl mb-4">💡</div>
-                <div className="text-xl font-medium text-white">Практика</div>
-                <div className="text-gray-400">Реальные проекты</div>
+                <div className="text-4xl mb-4">💰</div>
+                <div className="text-xl font-medium text-white">300 000 ₸</div>
+                <div className="text-gray-400">Kaspi Рассрочка</div>
+              </div>
+
+              <div className="p-6 rounded-xl bg-dark-secondary/40 border border-orange-400/30 backdrop-blur-sm">
+                <div className="text-4xl mb-4">📅</div>
+                <div className="text-xl font-medium text-white">12 Июля 2025</div>
+                <div className="text-gray-400">Начало курса</div>
               </div>
             </div>
 
-            <div className="text-3xl md:text-4xl font-light text-neon-blue mb-8">
+            <div className="text-3xl md:text-4xl font-light text-neon-blue mb-4">
               Создай продукт и получи плату уже на курсе!
+            </div>
+
+            <div className="text-xl md:text-2xl font-medium text-orange-400 mb-8">
+              ⚡ Успей занять место до 12 Июля 2025!
             </div>
 
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 1.2 }}
+              className="space-y-4"
             >
               <a
                 href="#application"
@@ -173,6 +184,10 @@ export default function CoursePage() {
                 <span className="text-2xl">🚀</span>
                 Подать заявку на курс
               </a>
+              
+              <div className="text-lg text-gray-300">
+                💳 Доступна рассрочка Kaspi
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -269,21 +284,26 @@ export default function CoursePage() {
             viewport={{ once: true }}
             className="text-center mt-16"
           >
-            <div className="p-8 rounded-2xl bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-neon-purple/30 backdrop-blur-sm">
-              <h3 className="text-2xl md:text-3xl font-medium text-white mb-4">
-                Готовы изучать ИИ-инструменты?
-              </h3>
-              <p className="text-lg text-gray-300 mb-8">
-                Присоединяйтесь к курсу и станьте экспертом в области искусственного интеллекта
-              </p>
-              <a
-                href="#application"
-                className="inline-flex items-center gap-4 px-10 py-4 text-lg font-medium text-white bg-gradient-to-r from-neon-purple to-neon-blue rounded-full hover:from-purple-400 hover:to-blue-400 transition-all duration-300 transform hover:scale-105"
-              >
-                <span className="text-xl">📝</span>
-                Оставить заявку
-              </a>
-            </div>
+                         <div className="p-8 rounded-2xl bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-neon-purple/30 backdrop-blur-sm">
+               <h3 className="text-2xl md:text-3xl font-medium text-white mb-4">
+                 Готовы изучать ИИ-инструменты?
+               </h3>
+               <p className="text-lg text-gray-300 mb-4">
+                 Присоединяйтесь к курсу и станьте экспертом в области искусственного интеллекта
+               </p>
+               <div className="text-center mb-6">
+                 <div className="text-2xl font-bold text-white mb-2">300 000 ₸</div>
+                 <div className="text-sm text-gray-400 mb-2">💳 Доступна рассрочка Kaspi</div>
+                 <div className="text-sm text-orange-400">📅 Начало: 12 Июля 2025</div>
+               </div>
+               <a
+                 href="#application"
+                 className="inline-flex items-center gap-4 px-10 py-4 text-lg font-medium text-white bg-gradient-to-r from-neon-purple to-neon-blue rounded-full hover:from-purple-400 hover:to-blue-400 transition-all duration-300 transform hover:scale-105"
+               >
+                 <span className="text-xl">📝</span>
+                 Оставить заявку
+               </a>
+             </div>
           </motion.div>
         </div>
       </section>
@@ -356,9 +376,24 @@ export default function CoursePage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-6xl font-thin mb-8 text-white">
+            <h2 className="text-4xl md:text-6xl font-thin mb-6 text-white">
               Подать заявку на курс
             </h2>
+            
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="text-center p-4 rounded-lg bg-dark-secondary/30 border border-gray-600/30">
+                <div className="text-2xl font-bold text-white">300 000 ₸</div>
+                <div className="text-sm text-gray-400">Стоимость курса</div>
+              </div>
+              <div className="text-center p-4 rounded-lg bg-dark-secondary/30 border border-gray-600/30">
+                <div className="text-lg font-medium text-orange-400">12 Июля 2025</div>
+                <div className="text-sm text-gray-400">Начало курса</div>
+              </div>
+              <div className="text-center p-4 rounded-lg bg-dark-secondary/30 border border-gray-600/30">
+                <div className="text-lg font-medium text-green-400">Kaspi рассрочка</div>
+                <div className="text-sm text-gray-400">Доступна</div>
+              </div>
+            </div>
             
             <p className="text-xl text-gray-400 leading-relaxed">
               Заполните форму, и мы свяжемся с вами для обсуждения деталей
