@@ -1,3 +1,4 @@
+import Navigation from '@/components/Navigation'
 import HeroSection from '@/sections/HeroSection'
 import AboutSection from '@/sections/AboutSection'
 import ProgramSection from '@/sections/ProgramSection'
@@ -9,6 +10,9 @@ import Footer from '@/components/Footer'
 export default function Home() {
   return (
     <main className="min-h-screen bg-dark-bg">
+      {/* Navigation */}
+      <Navigation />
+      
       {/* Hero секция */}
       <HeroSection />
 
