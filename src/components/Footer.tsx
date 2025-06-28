@@ -130,7 +130,7 @@ export default function Footer() {
             
             <div className="space-y-6">
               <a 
-                href="https://instagram.com/icai_kz" 
+                href="https://www.instagram.com/arnakairat?igsh=cHFtZndnbDNjYnht" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-4 text-gray-300 hover:text-pink-400 transition-colors group text-lg"
@@ -138,11 +138,11 @@ export default function Footer() {
                 <div className="w-16 h-16 rounded-full bg-dark-bg flex items-center justify-center group-hover:bg-pink-400/20 transition-colors text-2xl">
                   📸
                 </div>
-                <span>@icai_kz</span>
+                <span>@arnakairat</span>
               </a>
               
               <a 
-                href="https://threads.net/@icai_kz" 
+                href="https://www.threads.net/@arnakairat" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-4 text-gray-300 hover:text-purple-400 transition-colors group text-lg"
@@ -150,7 +150,7 @@ export default function Footer() {
                 <div className="w-16 h-16 rounded-full bg-dark-bg flex items-center justify-center group-hover:bg-purple-400/20 transition-colors text-2xl">
                   🧵
                 </div>
-                <span>@icai_kz</span>
+                <span>@arnakairat</span>
               </a>
             </div>
           </motion.div>
