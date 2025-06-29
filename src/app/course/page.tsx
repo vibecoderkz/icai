@@ -111,7 +111,7 @@ export default function CoursePage() {
     },
     {
       title: "Vibe-Coding (9-16)",
-      description: "архитектура, код, API (8 уроков)",
+      description: "архитектура, код, API",
       icon: "💻"
     },
     {
@@ -166,8 +166,8 @@ export default function CoursePage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               <div className="p-6 rounded-xl bg-dark-secondary/40 border border-neon-purple/30 backdrop-blur-sm">
                 <div className="text-4xl mb-4">⏱️</div>
-                <div className="text-xl font-medium text-white">10 недель</div>
-                <div className="text-gray-400">8 уроков Vibe-Coding</div>
+                <div className="text-xl font-medium text-white">2,5 месяца</div>
+                <div className="text-gray-400">2 урока в неделю</div>
               </div>
               
               <div className="p-6 rounded-xl bg-dark-secondary/40 border border-neon-blue/30 backdrop-blur-sm">
