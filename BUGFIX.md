@@ -168,6 +168,27 @@
 
 **Статус:** ✅ Реализовано
 
+### Исправление ESLint ошибки с кавычками (30.12.2024)
+
+**Проблема:** ESLint ошибка при сборке - неэкранированные кавычки в JSX
+```
+./src/app/course/page.tsx
+613:52  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+```
+
+**Причина:** Использование обычных кавычек в JSX тексте вместо HTML entities
+
+**Решение:** Заменил прямые кавычки на HTML entities в src/app/course/page.tsx строка 613:
+```jsx
+// Было:
+<p className="text-gray-300">"Member of International Community of Artificial Intelligence"</p>
+
+// Стало:
+<p className="text-gray-300">&ldquo;Member of International Community of Artificial Intelligence&rdquo;</p>
+```
+
+**Статус:** ✅ Исправлено
+
 ## Заметки по отладке
 
 - При работе с терминалом использовать cmd /c для команд если PowerShell выдает ошибки
