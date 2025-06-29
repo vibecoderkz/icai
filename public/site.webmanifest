@@ -1,0 +1,16 @@
+{
+  "name": "ICAI - AI-Форум и Курсы",
+  "short_name": "ICAI",
+  "description": "Первая ИИ-конференция в Астане и курсы по искусственному интеллекту",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#8b5cf6",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+} 

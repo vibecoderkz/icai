@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Navigation from '@/components/Navigation'
+import AIChat from '@/components/AIChat'
 import { sendCourseApplication } from '@/utils/telegram'
 
 interface FormData {
@@ -12,6 +13,8 @@ interface FormData {
   profession: string
   experience: string
   motivation: string
+  promocode: string
+  courseType: string
 }
 
 export default function CoursePage() {
@@ -22,7 +25,9 @@ export default function CoursePage() {
     phone: '',
     profession: '',
     experience: '',
-    motivation: ''
+    motivation: '',
+    promocode: '',
+    courseType: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -47,6 +52,25 @@ export default function CoursePage() {
       const success = await sendCourseApplication(formData)
       
       if (success) {
+        // Send WhatsApp message
+        const whatsappMessage = `Спасибо за заявку на курс! Наши менеджеры свяжутся с вами в ближайшее время.`
+        
+        try {
+          await fetch('/api/whatsapp', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              body: whatsappMessage,
+              recipient: formData.phone.replace(/\D/g, '') // Remove non-digits from phone
+            })
+          })
+        } catch (whatsappError) {
+          console.error('WhatsApp message error:', whatsappError)
+          // Don't show error to user as the main form submission was successful
+        }
+
         setIsSubmitted(true)
         setFormData({
           fullName: '',
@@ -54,7 +78,9 @@ export default function CoursePage() {
           phone: '',
           profession: '',
           experience: '',
-          motivation: ''
+          motivation: '',
+          promocode: '',
+          courseType: ''
         })
       } else {
         alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.')
@@ -364,6 +390,298 @@ export default function CoursePage() {
         </div>
       </section>
 
+      {/* Дополнительные курсы */}
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-dark-secondary via-orange-900/10 to-dark-bg" />
+        
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-6xl font-thin mb-8 text-white">
+              Дополнительные курсы
+            </h2>
+            <p className="text-xl text-gray-400 leading-relaxed max-w-3xl mx-auto">
+              Выберите программу, которая подходит именно вам
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            {/* Курс только Вайб-кодинг */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-2xl bg-dark-secondary/40 border border-purple-400/30 backdrop-blur-sm hover:border-purple-400/60 transition-all duration-300"
+            >
+              <div className="text-6xl mb-6 text-center">💻</div>
+              <h3 className="text-2xl font-medium text-white mb-4 text-center">
+                Только Вайб-кодинг
+              </h3>
+              <p className="text-gray-300 text-center mb-6 leading-relaxed">
+                Создайте свой ИИ-проект с нуля. Практический курс для тех, кто хочет сразу перейти к разработке.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span className="text-gray-300">Архитектура AI-приложений</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span className="text-gray-300">Работа с API и библиотеками</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span className="text-gray-300">Создание MVP AI-продукта</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span className="text-gray-300">Поиск первых клиентов</span>
+                </div>
+              </div>
+
+              <div className="text-center mb-6">
+                <div className="text-3xl font-bold text-white mb-2">150 000 ₸</div>
+                <div className="text-lg text-green-400 mb-2">125 000 ₸ с промокодом</div>
+                <div className="text-sm text-gray-400">💳 Kaspi рассрочка доступна</div>
+              </div>
+            </motion.div>
+
+            {/* Видео курс */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-2xl bg-dark-secondary/40 border border-blue-400/30 backdrop-blur-sm hover:border-blue-400/60 transition-all duration-300"
+            >
+              <div className="text-6xl mb-6 text-center">🎥</div>
+              <h3 className="text-2xl font-medium text-white mb-4 text-center">
+                Видео курс по Вайб-кодингу
+              </h3>
+              <p className="text-gray-300 text-center mb-6 leading-relaxed">
+                Изучайте в удобном темпе. Полный видео-курс с практическими заданиями и поддержкой.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <span className="text-gray-300">Пошаговые видео-уроки</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <span className="text-gray-300">Практические задания</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <span className="text-gray-300">Доступ к материалам навсегда</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <span className="text-gray-300">Поддержка в чате</span>
+                </div>
+              </div>
+
+              <div className="text-center mb-6">
+                <div className="text-3xl font-bold text-white mb-2">100 000 ₸</div>
+                <div className="text-lg text-green-400 mb-2">75 000 ₸ с промокодом (-25%)</div>
+                <div className="text-sm text-gray-400">💳 Kaspi рассрочка доступна</div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Основной курс */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="p-8 rounded-2xl bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-neon-purple/50 backdrop-blur-sm"
+          >
+            <div className="text-center">
+              <div className="text-4xl mb-4">🚀</div>
+              <h3 className="text-3xl font-medium text-white mb-4">
+                Полный курс «Практика ИИ-инструментов и Вайб-кодинг»
+              </h3>
+              <p className="text-xl text-gray-300 mb-6">
+                Комплексная программа: от промптинга до создания AI-продукта
+              </p>
+              <div className="text-4xl font-bold text-white mb-2">300 000 ₸</div>
+              <div className="text-lg text-gray-400 mb-4">💳 Kaspi рассрочка • 📅 Старт: 12 июля 2025</div>
+              <div className="text-sm text-orange-400">🔥 Самая популярная программа</div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Презентация проектов и карьерные возможности */}
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-dark-bg via-green-900/10 to-dark-secondary" />
+        
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-6xl font-thin mb-8 text-white">
+              Презентация проектов
+            </h2>
+            <p className="text-xl text-gray-400 leading-relaxed max-w-3xl mx-auto">
+              Выпускники представляют свои AI-проекты на наших форумах перед живой аудиторией
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-12 mb-16">
+            {/* Презентация на форуме */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <div className="p-8 rounded-2xl bg-gradient-to-br from-purple-900/30 to-blue-900/30 border border-purple-400/30 backdrop-blur-sm">
+                <div className="text-6xl mb-6 text-center">🎤</div>
+                <h3 className="text-3xl font-medium text-white mb-6 text-center">
+                  Публичная презентация
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm">🎯</span>
+                    </div>
+                    <div>
+                      <div className="text-lg font-medium text-white mb-2">Демонстрация MVP</div>
+                      <p className="text-gray-300">Покажите свой AI-проект в действии перед аудиторией экспертов</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm">💼</span>
+                    </div>
+                    <div>
+                      <div className="text-lg font-medium text-white mb-2">Нетворкинг</div>
+                      <p className="text-gray-300">Знакомство с потенциальными клиентами и партнерами</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm">🏆</span>
+                    </div>
+                    <div>
+                      <div className="text-lg font-medium text-white mb-2">Обратная связь</div>
+                      <p className="text-gray-300">Получите ценные советы от экспертов AI-индустрии</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Вручение дипломов */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <div className="p-8 rounded-2xl bg-gradient-to-br from-green-900/30 to-yellow-900/30 border border-green-400/30 backdrop-blur-sm">
+                <div className="text-6xl mb-6 text-center">🎓</div>
+                <h3 className="text-3xl font-medium text-white mb-6 text-center">
+                  Торжественное вручение дипломов
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm">📜</span>
+                    </div>
+                    <div>
+                      <div className="text-lg font-medium text-white mb-2">Официальный диплом</div>
+                      <p className="text-gray-300">&ldquo;Member of International Community of Artificial Intelligence&rdquo;</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm">📸</span>
+                    </div>
+                    <div>
+                      <div className="text-lg font-medium text-white mb-2">Торжественная церемония</div>
+                      <p className="text-gray-300">Празднование достижений в кругу единомышленников</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white text-sm">🌟</span>
+                    </div>
+                    <div>
+                      <div className="text-lg font-medium text-white mb-2">Признание экспертов</div>
+                      <p className="text-gray-300">Ваши достижения отметят ведущие специалисты отрасли</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Карьерные возможности */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="p-10 rounded-2xl bg-gradient-to-r from-neon-purple/20 to-neon-blue/20 border border-neon-purple/50 backdrop-blur-sm text-center"
+          >
+            <div className="text-6xl mb-6">🚀</div>
+            <h3 className="text-4xl font-medium text-white mb-6">
+              Работа в команде ICAI
+            </h3>
+            <p className="text-xl text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto">
+              Лучшие выпускники получают уникальную возможность присоединиться к нашей команде и развивать AI-образование в Казахстане
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              <div className="p-6 rounded-xl bg-dark-secondary/40 border border-purple-400/30">
+                <div className="text-4xl mb-4">💡</div>
+                <div className="text-lg font-medium text-white mb-2">Менторство</div>
+                <p className="text-gray-300 text-sm">Обучайте новых студентов и делитесь опытом</p>
+              </div>
+              
+              <div className="p-6 rounded-xl bg-dark-secondary/40 border border-blue-400/30">
+                <div className="text-4xl mb-4">🔬</div>
+                <div className="text-lg font-medium text-white mb-2">Исследования</div>
+                <p className="text-gray-300 text-sm">Участвуйте в разработке новых AI-курсов</p>
+              </div>
+              
+              <div className="p-6 rounded-xl bg-dark-secondary/40 border border-green-400/30">
+                <div className="text-4xl mb-4">🌍</div>
+                <div className="text-lg font-medium text-white mb-2">Развитие</div>
+                <p className="text-gray-300 text-sm">Помогайте расширять AI-образование</p>
+              </div>
+            </div>
+            
+            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-neon-purple to-neon-blue rounded-full text-white font-medium">
+              <span className="text-2xl">⭐</span>
+              <span className="text-lg">Стань частью команды мечты</span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Application Form Section */}
       <section id="application" className="relative min-h-screen flex items-center justify-center px-6 py-20">
         <div className="absolute inset-0 bg-gradient-to-br from-dark-bg via-green-900/10 to-dark-secondary" />
@@ -498,6 +816,48 @@ export default function CoursePage() {
                 </div>
 
                 <div className="mb-6">
+                  <label htmlFor="promocode" className="block text-sm font-medium text-gray-300 mb-2">
+                    Промокод
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      id="promocode"
+                      name="promocode"
+                      value={formData.promocode}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 rounded-lg bg-dark-bg/50 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-green-400 transition-colors"
+                      placeholder="Введите промокод для скидки"
+                    />
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-400 text-sm font-medium">
+                      25% скидка
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-400 mt-2">
+                    Добавьте промокод и получите скидку 25%
+                  </p>
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="courseType" className="block text-sm font-medium text-gray-300 mb-2">
+                    Какой курс вас интересует? *
+                  </label>
+                  <select
+                    id="courseType"
+                    name="courseType"
+                    value={formData.courseType}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-dark-bg/50 border border-gray-600 text-white focus:outline-none focus:border-neon-purple transition-colors"
+                  >
+                    <option value="">Выберите курс</option>
+                    <option value="Полный курс (300 000 ₸)">Полный курс «Практика ИИ-инструментов и Вайб-кодинг» (300 000 ₸)</option>
+                    <option value="Только Вайб-кодинг (150 000 ₸)">Только Вайб-кодинг (150 000 ₸)</option>
+                    <option value="Видео курс (100 000 ₸)">Видео курс по Вайб-кодингу (100 000 ₸)</option>
+                  </select>
+                </div>
+
+                <div className="mb-6">
                   <label htmlFor="experience" className="block text-sm font-medium text-gray-300 mb-2">
                     Опыт работы с ИИ *
                   </label>
@@ -579,6 +939,9 @@ export default function CoursePage() {
           </motion.div>
         </div>
       </section>
+
+      {/* ИИ Чат */}
+      <AIChat />
     </div>
   )
 } 

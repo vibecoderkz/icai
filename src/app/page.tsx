@@ -6,6 +6,7 @@ import SpeakerSection from '@/sections/SpeakerSection'
 import WorkshopSection from '@/sections/WorkshopSection'
 import RegistrationSection from '@/sections/RegistrationSection'
 import Footer from '@/components/Footer'
+import AIChat from '@/components/AIChat'
 
 export default function Home() {
   return (
@@ -86,6 +87,9 @@ export default function Home() {
 
       {/* Футер */}
       <Footer />
+
+      {/* ИИ Чат */}
+      <AIChat />
     </main>
   )
 } 

@@ -14,6 +14,8 @@ interface CourseApplicationData {
   profession: string
   experience: string
   motivation: string
+  promocode: string
+  courseType: string
 }
 
 export const sendToTelegram = async (data: RegistrationData): Promise<boolean> => {
@@ -58,13 +60,14 @@ export const sendToTelegram = async (data: RegistrationData): Promise<boolean> =
 export const sendCourseApplication = async (data: CourseApplicationData): Promise<boolean> => {
   try {
     const message = `
-🎓 Новая заявка на курс "Практика ИИ-инструментов и Вайб-Кодинг":
+🎓 Новая заявка на курс ICAI:
+📚 Курс: ${data.courseType}
 👤 ФИО: ${data.fullName}
 📧 Email: ${data.email}
 📱 Телефон: ${data.phone}
 💼 Профессия: ${data.profession}
 🎯 Опыт с ИИ: ${data.experience}
-💭 Мотивация: ${data.motivation}
+💭 Мотивация: ${data.motivation}${data.promocode ? `\n🎫 Промокод: ${data.promocode}` : ''}
 ⏰ Время: ${new Date().toLocaleString('ru-RU')}
     `.trim()
 
